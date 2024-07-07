@@ -1,15 +1,20 @@
-from typing import Union
-
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 
 app = FastAPI()
 
-
 @app.get("/")
 def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World from Suleiman!!!!"}
 
+@app.get("/posts")
+def get_posts():
+    return {"data": "This is your post"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/createposts")
+def create_posts(payload: dict = Body(...)):
+    return {
+        "new_post": {
+            "title": payload['title'],
+            "content": payload['content']
+        }
+    }
